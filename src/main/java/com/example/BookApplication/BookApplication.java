@@ -1,4 +1,3 @@
-//Nomenglatura Repositorios JPA
 package com.example.BookApplication;
 
 import io.github.cdimascio.dotenv.Dotenv;

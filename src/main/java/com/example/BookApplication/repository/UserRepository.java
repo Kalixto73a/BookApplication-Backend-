@@ -1,7 +1,6 @@
 package com.example.BookApplication.repository;
 
 import com.example.BookApplication.entity.UserEntity;
-import org.apache.catalina.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -2,8 +2,6 @@ package com.example.BookApplication.entity;
 
 import com.example.BookApplication.enums.UserRole;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package com.example.BookApplication.config.initializeValues;
 
-import com.example.BookApplication.controller.BookController;
 import com.example.BookApplication.entity.BookEntity;
 import com.example.BookApplication.entity.UserEntity;
 import com.example.BookApplication.enums.UserRole;
