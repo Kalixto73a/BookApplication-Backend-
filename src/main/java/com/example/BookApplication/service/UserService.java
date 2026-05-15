@@ -21,6 +21,12 @@ public interface UserService {
 
     TokenResponseDTO refreshTokenDTO(RefreshTokenRequestDTO refreshTokenRequestDTO);
 
-    TokenResponseDTO loginWithGithub(Authentication authentication);
+    UserEntity loginWithGithub(Authentication authentication);
+
+    TokenResponseDTO loginWithGithubDTO(Authentication authentication);
+
+    void logout(RefreshTokenRequestDTO refreshTokenRequestDTO);
+
+    void logoutDTO(RefreshTokenRequestDTO refreshTokenRequestDTO);
 
 }

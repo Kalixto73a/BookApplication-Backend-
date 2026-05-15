@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "a17f8ae2-367d-4da3-8602-fa46f7e8c1dd",
+    "_postman_id": "0931768e-a5ef-465a-8d48-10aac3bcf4d8",
     "name": "Books",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "39478122"
@@ -85,6 +85,33 @@
               "path": [
                 "auth",
                 "refresh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refreshToken\": \"{{REFRESH_TOKEN}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/logout",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
               ]
             }
           },

@@ -148,7 +148,8 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public TokenResponseDTO loginWithGithub(Authentication authentication){
+    @Override
+    public UserEntity loginWithGithub(Authentication authentication){
 
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 
@@ -156,18 +157,13 @@ public class UserServiceImpl implements UserService {
         String name = oAuth2User.getAttribute("name");
         String login = oAuth2User.getAttribute("login");
 
-        if (email == null){
-            email = login + "@github.com";
-        }
-
-        if (name == null){
-            name = login;
-        }
+        if (email == null) email = login + "@github.com";
+        if (name == null) name = login;
 
         String finalEmail = email;
         String finalName = name;
 
-        UserEntity user = userRepository.findByEmail(email)
+        UserEntity user = userRepository.findByEmail(finalEmail)
                 .orElseGet(() -> {
                     UserEntity newUser = UserEntity.builder()
                             .email(finalEmail)
@@ -178,6 +174,18 @@ public class UserServiceImpl implements UserService {
                             .build();
                     return userRepository.save(newUser);
                 });
+
+        LOGGER.debug("User: {}, successfully logged in with github", user.getEmail());
+
+        return user;
+
+    }
+
+    @Override
+    public TokenResponseDTO loginWithGithubDTO(Authentication authentication) {
+
+        UserEntity user = loginWithGithub(authentication);
+
         String token = jwtServiceImpl.generateToken(user);
         saveRefreshToken(user);
 
@@ -185,9 +193,34 @@ public class UserServiceImpl implements UserService {
         response.setToken(token);
         response.setRefreshToken(user.getRefreshToken());
 
-        LOGGER.debug("User: {}, successfully logged in with github", user.getEmail());
+        LOGGER.debug("User: {}, successfully logged and mapped in with github", user.getEmail());
 
         return response;
+
+    }
+
+
+    @Override
+    public void logout(RefreshTokenRequestDTO refreshTokenRequestDTO){
+
+        UserEntity user = userRepository.findByRefreshToken(refreshTokenRequestDTO.getRefreshToken())
+                .orElseThrow(() -> new InvalidRefreshTokenException("Invalid refresh token"));
+
+        user.setRefreshToken(null);
+        user.setRefreshTokenExpiresAt(null);
+
+        LOGGER.debug("User logged out: {}", user.getEmail());
+
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public void logoutDTO(RefreshTokenRequestDTO refreshTokenRequestDTO) {
+
+        logout(refreshTokenRequestDTO);
+
+        LOGGER.debug("User logged out successfully mapped");
 
     }
 

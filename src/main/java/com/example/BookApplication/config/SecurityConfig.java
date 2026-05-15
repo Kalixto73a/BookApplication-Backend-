@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler((request, response, authentication) -> {
-                            TokenResponseDTO token = userService.loginWithGithub(authentication);
+                            TokenResponseDTO token = userService.loginWithGithubDTO(authentication);
                             response.setContentType("application/json");
                             response.getWriter().write(
                                     "{\"token\":\"" + token.getToken() + "\",\"refreshToken\":\"" + token.getRefreshToken() + "\"}"

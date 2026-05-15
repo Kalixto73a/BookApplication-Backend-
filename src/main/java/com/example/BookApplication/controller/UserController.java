@@ -22,7 +22,6 @@ public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
     private final UserServiceImpl userService;
 
     @PostMapping("/login")
@@ -49,6 +48,17 @@ public class UserController {
         LOGGER.info("POST /api/auth/refresh | Refresh your token with the refreshToken");
 
         return ResponseEntity.ok(userService.refreshTokenDTO(refreshTokenRequestDTO));
+
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@RequestBody @Valid RefreshTokenRequestDTO refreshTokenRequestDTO) {
+
+        LOGGER.info("POST /api/auth/logout | Logout the user with his refreshToken");
+
+        userService.logoutDTO(refreshTokenRequestDTO);
+
+        return ResponseEntity.ok().build();
 
     }
 
