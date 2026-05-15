@@ -1,0 +1,40 @@
+application:
+    security:
+        jwt:
+            secret-key: ${JWT_SECRET_KEY}
+            expiration: 600000
+            refresh-token:
+                expiration: 604800000
+logging:
+    level:
+        com:
+            example:
+                BookApplication: DEBUG
+spring:
+    application:
+        name: BookApplication
+    datasource:
+        url: jdbc:postgresql://localhost:5432/booksdb
+        username: postgres
+        password: password123
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        show-sql: true
+    security:
+        user:
+            name: user
+            password: password123
+        oauth2:
+            client:
+                registration:
+                    github:
+                        client-id: ${GITHUB_CLIENT_ID}
+                        client-secret: ${GITHUB_CLIENT_SECRET}
+                        scope:
+                            - user:email
+                            - read:user
+springdoc:
+    swagger-ui:
+        tags-sorter: alpha
